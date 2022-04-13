@@ -1,16 +1,16 @@
 package main.kotlin.lab2
+
 import kotlin.math.sqrt
 
-fun main()
-{
+fun main() {
     val color1 = ColorOfRGBA(1, 1, 1, 1.0)
     val color2 = ColorOfRGBA(3, 4, 56, 0.23)
     val color3 = ColorOfRGBA(1, 1, 1, 1.0)
     val color4 = ColorOfRGBA(1, 1, 1, 1.0)
     val circle1 = Circle(2, color1, color2)
-    val square1 = Square(12.0,15.0, color3, color1)
-    val square2 = Square(6.0,13.0, color4, color2)
-    val triangle1 = Triangle(6.0,13.0, 23.0, color4, color2)
+    val square1 = Square(12.0, 15.0, color3, color1)
+    val square2 = Square(6.0, 13.0, color4, color2)
+    val triangle1 = Triangle(6.0, 13.0, 23.0, color4, color2)
     val figurelist = ShapeCollector()
 
     figurelist.addFigures(circle1)
@@ -40,35 +40,34 @@ fun main()
     figurelist.searchType("Triangle")
 
 }
-data class ColorOfRGBA(val red: Int, val green: Int, val blue: Int, val alpha: Double){
-    override fun toString(): String
-    {
+
+data class ColorOfRGBA(val red: Int, val green: Int, val blue: Int, val alpha: Double) {
+    override fun toString(): String {
         return "Color figure of RGBA: $red, $green, $blue, $alpha"
     }
 }
-interface Shape2d
-{
+
+interface Shape2d {
     fun calcArea(): Double
 }
-interface ColoredShape2d : Shape2d
-{
+
+interface ColoredShape2d : Shape2d {
     val borderColor: ColorOfRGBA
     val fillColor: ColorOfRGBA
 }
-class Circle(radius_1: Int, borderColor_1: ColorOfRGBA, fillColor_1: ColorOfRGBA): ColoredShape2d
-{
+
+class Circle(radius_1: Int, borderColor_1: ColorOfRGBA, fillColor_1: ColorOfRGBA) : ColoredShape2d {
     private val radius: Int = radius_1
     private var pi = 3.14
     override val borderColor: ColorOfRGBA = borderColor_1
     override val fillColor: ColorOfRGBA = fillColor_1
-    override fun calcArea(): Double
-    {
+    override fun calcArea(): Double {
         return pi * radius * radius
     }
 }
-class Square(firstSide_1: Double, secondSide_1: Double, borderColor_1: ColorOfRGBA, fillColor_1: ColorOfRGBA):
-    ColoredShape2d
-{
+
+class Square(firstSide_1: Double, secondSide_1: Double, borderColor_1: ColorOfRGBA, fillColor_1: ColorOfRGBA) :
+    ColoredShape2d {
     private val firstSide = firstSide_1
     private val secondSide = secondSide_1
     override val borderColor: ColorOfRGBA = borderColor_1
@@ -77,16 +76,21 @@ class Square(firstSide_1: Double, secondSide_1: Double, borderColor_1: ColorOfRG
         return firstSide * secondSide
     }
 }
-class Triangle(triangleFirstSide_1: Double, triangleSecondSide_1: Double, triangleThirdSide_1: Double, borderColorTriangle: ColorOfRGBA, fillColorTriangle: ColorOfRGBA):
-    ColoredShape2d
-{
+
+class Triangle(
+    triangleFirstSide_1: Double,
+    triangleSecondSide_1: Double,
+    triangleThirdSide_1: Double,
+    borderColorTriangle: ColorOfRGBA,
+    fillColorTriangle: ColorOfRGBA
+) :
+    ColoredShape2d {
     private val triangleFirstSide = triangleFirstSide_1
     private val triangleSecondSide = triangleSecondSide_1
     private val triangleThirdSide = triangleThirdSide_1
     override val borderColor: ColorOfRGBA = borderColorTriangle
     override val fillColor: ColorOfRGBA = fillColorTriangle
-    override fun calcArea(): Double
-    {
+    override fun calcArea(): Double {
         val square: Double
         if (triangleFirstSide > 0.0 && triangleSecondSide > 0.0 && triangleThirdSide > 0.0) {
             if (triangleFirstSide + triangleSecondSide > triangleThirdSide
@@ -102,105 +106,94 @@ class Triangle(triangleFirstSide_1: Double, triangleSecondSide_1: Double, triang
         return square
     }
 }
+
 class ShapeCollector {
     private var figureList: ArrayList<ColoredShape2d> = arrayListOf()
     private var sumSquare: Double = 0.0
-    fun addFigures(figure: ColoredShape2d)
-    {
+    fun addFigures(figure: ColoredShape2d) {
         figureList.add(figure)
     }
-    fun listAllFigures(): ArrayList<ColoredShape2d>
-    {
+
+    fun listAllFigures(): ArrayList<ColoredShape2d> {
         return figureList
     }
-    fun sumSquareFigures(): Double
-    {
+
+    fun sumSquareFigures(): Double {
         val leftBorder = figureList.size - 1
-        for (i in 0..leftBorder)
-        {
+        for (i in 0..leftBorder) {
             sumSquare += figureList[i].calcArea()
         }
         println(sumSquare)
         return sumSquare
     }
-    fun sizeFigureList(): Int
-    {
+
+    fun sizeFigureList(): Int {
         return figureList.size
     }
-    fun minSquare(): ColoredShape2d
-    {
+
+    fun minSquare(): ColoredShape2d {
         val size = figureList.size - 1
         var minSquare = figureList[0].calcArea()
         var minFigure: ColoredShape2d = figureList[0]
-        for (i in 0..size)
-        {
-            if (figureList[i].calcArea() <= minSquare)
-            {
+        for (i in 0..size) {
+            if (figureList[i].calcArea() <= minSquare) {
                 minSquare = figureList[i].calcArea()
                 minFigure = figureList[i]
             }
         }
-        println ("min: $minSquare")
+        println("min: $minSquare")
         return minFigure
     }
-    fun maxSquare(): ColoredShape2d
-    {
+
+    fun maxSquare(): ColoredShape2d {
         val size = figureList.size - 1
         var maxSquare = figureList[0].calcArea()
         var maxFigure: ColoredShape2d = figureList[0]
-        for (i in 0..size)
-        {
-            if (figureList[i].calcArea() >= maxSquare)
-            {
+        for (i in 0..size) {
+            if (figureList[i].calcArea() >= maxSquare) {
                 maxSquare = figureList[i].calcArea()
                 maxFigure = figureList[i]
             }
         }
-        println ("min: $maxSquare")
+        println("min: $maxSquare")
         return maxFigure
     }
-    fun searchBorderColor(key: ColorOfRGBA): ArrayList<ColoredShape2d>
-    {
+
+    fun searchBorderColor(key: ColorOfRGBA): ArrayList<ColoredShape2d> {
         val listKeepFiguries: ArrayList<ColoredShape2d> = arrayListOf()
         val size = figureList.size - 1
-        for (i in 0..size)
-        {
-            if (figureList[i].borderColor == key)
-            {
+        for (i in 0..size) {
+            if (figureList[i].borderColor == key) {
                 listKeepFiguries.add(figureList[i])
             }
         }
         return listKeepFiguries
     }
-    fun mapFillColor(): Map<ColorOfRGBA, List<ColoredShape2d>>
-    {
+
+    fun mapFillColor(): Map<ColorOfRGBA, List<ColoredShape2d>> {
         return figureList.groupBy { it.fillColor }
     }
-    fun mapBorderColor(): Map<ColorOfRGBA, List<ColoredShape2d>>
-    {
+
+    fun mapBorderColor(): Map<ColorOfRGBA, List<ColoredShape2d>> {
         return figureList.groupBy { it.borderColor }
     }
-    fun searchFillColor(key: ColorOfRGBA): ArrayList<ColoredShape2d>
-    {
+
+    fun searchFillColor(key: ColorOfRGBA): ArrayList<ColoredShape2d> {
         val listKeepFiguries: ArrayList<ColoredShape2d> = arrayListOf()
         val size = figureList.size - 1
-        for (i in 0..size)
-        {
-            if (figureList[i].fillColor == key)
-            {
+        for (i in 0..size) {
+            if (figureList[i].fillColor == key) {
                 listKeepFiguries.add(figureList[i])
             }
         }
         return listKeepFiguries
     }
-    fun searchType(key: String): ArrayList<ColoredShape2d>
-    {
+
+    fun searchType(key: String): ArrayList<ColoredShape2d> {
         val typeList: ArrayList<ColoredShape2d> = arrayListOf()
         val size = figureList.size - 1
-        for(i in 0..size)
-        {
-            if(figureList[i].javaClass.simpleName == key)
-            {
+        for (i in 0..size) {
+            if (figureList[i].javaClass.simpleName == key) {
                 typeList.add(figureList[i])
             }
         }
