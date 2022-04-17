@@ -92,10 +92,11 @@ class Triangle(
     override val fillColor: ColorOfRGBA = fillColorTriangle
     override fun calcArea(): Double {
         val square: Double
+        // check triangle sides
         if (triangleFirstSide > 0.0 && triangleSecondSide > 0.0 && triangleThirdSide > 0.0) {
-            if (triangleFirstSide + triangleSecondSide > triangleThirdSide
-                && triangleFirstSide + triangleThirdSide > triangleSecondSide
-                && triangleSecondSide + triangleThirdSide > triangleFirstSide
+            if (triangleFirstSide + triangleSecondSide > triangleThirdSide //checking the sum of the first two sides
+                && triangleFirstSide + triangleThirdSide > triangleSecondSide //checking the sum of the first and third side
+                && triangleSecondSide + triangleThirdSide > triangleFirstSide //checking the sum of the second and third side
             ) {
                 val perimeter = (triangleFirstSide + triangleSecondSide + triangleThirdSide) / 2
                 square = sqrt(
