@@ -1,4 +1,4 @@
-package lab1
+package main.kotlin.lab1
 
 fun main() {
     val text = """
@@ -9,22 +9,22 @@ fun main() {
             """
     val bookList: ArrayList<Book> = parsebook(text)
     println(
-        """${bookList[0].BookName} ${bookList[0].Author} ${bookList[0].YearOfIssue}
-    ${bookList[1].BookName} ${bookList[1].Author} ${bookList[1].YearOfIssue}
-    ${bookList[2].BookName} ${bookList[2].Author} ${bookList[2].YearOfIssue}
-    ${bookList[3].BookName} ${bookList[3].Author} ${bookList[3].YearOfIssue}"""
+        """${bookList[0].bookName} ${bookList[0].author} ${bookList[0].yearOfIssue}
+    ${bookList[1].bookName} ${bookList[1].author} ${bookList[1].yearOfIssue}
+    ${bookList[2].bookName} ${bookList[2].author} ${bookList[2].yearOfIssue}
+    ${bookList[3].bookName} ${bookList[3].author} ${bookList[3].yearOfIssue}"""
     )
     var maxYearOfIssue = Int.MIN_VALUE
     var minYearOfIssue = Int.MAX_VALUE
-    var longNameBook = bookList[0].BookName
-    var shortNameBook = bookList[0].BookName
+    var longNameBook = bookList[0].bookName
+    var shortNameBook = bookList[0].bookName
     for (i in bookList.indices) {
-        val year: Int = bookList[i].YearOfIssue.toInt()
+        val year: Int = bookList[i].yearOfIssue.toInt()
         if (maxYearOfIssue <= year) maxYearOfIssue = year
         if (minYearOfIssue >= year) minYearOfIssue = year
-        val length: Int = bookList[i].BookName.length
-        if (longNameBook.length <= length) longNameBook = bookList[i].BookName
-        if (longNameBook.length >= length) shortNameBook = bookList[i].BookName
+        val length: Int = bookList[i].bookName.length
+        if (longNameBook.length <= length) longNameBook = bookList[i].bookName
+        if (longNameBook.length >= length) shortNameBook = bookList[i].bookName
     }
     println("The oldest book: $maxYearOfIssue, the newest book: $minYearOfIssue")
     println("The shortest book name: $shortNameBook, the longest book name $longNameBook")
