@@ -3,10 +3,10 @@ package main.kotlin.lab2
 import kotlin.math.sqrt
 
 fun main() {
-    val color1 = ColorOfRGBA(1, 1, 1, 1.0)
+    val color1 = ColorOfRGBA(2, 123, 56, 0.31)
     val color2 = ColorOfRGBA(3, 4, 56, 0.23)
-    val color3 = ColorOfRGBA(1, 1, 1, 1.0)
-    val color4 = ColorOfRGBA(1, 1, 1, 1.0)
+    val color3 = ColorOfRGBA(45, 234, 12, 1.0)
+    val color4 = ColorOfRGBA(5, 103, 78, 0.78)
     val circle1 = Circle(2, color1, color2)
     val square1 = Square(12.0, 15.0, color3, color1)
     val square2 = Square(6.0, 13.0, color4, color2)
@@ -57,8 +57,8 @@ interface ColoredShape2d : Shape2d {
 }
 
 class Circle(radius_1: Int, borderColor_1: ColorOfRGBA, fillColor_1: ColorOfRGBA) : ColoredShape2d {
-    private val radius: Int = radius_1
-    private var pi = 3.14
+    val radius: Int = radius_1
+    var pi = 3.14
     override val borderColor: ColorOfRGBA = borderColor_1
     override val fillColor: ColorOfRGBA = fillColor_1
     override fun calcArea(): Double {
@@ -68,8 +68,8 @@ class Circle(radius_1: Int, borderColor_1: ColorOfRGBA, fillColor_1: ColorOfRGBA
 
 class Square(firstSide_1: Double, secondSide_1: Double, borderColor_1: ColorOfRGBA, fillColor_1: ColorOfRGBA) :
     ColoredShape2d {
-    private val firstSide = firstSide_1
-    private val secondSide = secondSide_1
+    val firstSide = firstSide_1
+    val secondSide = secondSide_1
     override val borderColor: ColorOfRGBA = borderColor_1
     override val fillColor: ColorOfRGBA = fillColor_1
     override fun calcArea(): Double {
@@ -85,9 +85,9 @@ class Triangle(
     fillColorTriangle: ColorOfRGBA
 ) :
     ColoredShape2d {
-    private val triangleFirstSide = triangleFirstSide_1
-    private val triangleSecondSide = triangleSecondSide_1
-    private val triangleThirdSide = triangleThirdSide_1
+    val triangleFirstSide = triangleFirstSide_1
+    val triangleSecondSide = triangleSecondSide_1
+    val triangleThirdSide = triangleThirdSide_1
     override val borderColor: ColorOfRGBA = borderColorTriangle
     override val fillColor: ColorOfRGBA = fillColorTriangle
     override fun calcArea(): Double {
