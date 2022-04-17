@@ -7,7 +7,7 @@ fun main() {
             3.The Great Gatsby// F.ScottFitzgerald// 1925
             4.The Invisible Man//H.Wells// 1897
             """
-    val bookList: ArrayList<Book> = parsebook(text)
+    val bookList: List<Book> = parsebook(text)
     println(
         """${bookList[0].bookName} ${bookList[0].author} ${bookList[0].yearOfIssue}
     ${bookList[1].bookName} ${bookList[1].author} ${bookList[1].yearOfIssue}

@@ -2,7 +2,7 @@ package main.kotlin.lab1
 
 class Book(val bookName: String, val author: String, val yearOfIssue: String)
 
-fun parsebook(books: String): ArrayList<Book> {
+fun parsebook(books: String): List<Book> {
     val booksList: ArrayList<Book> = arrayListOf()
     var bookName: String
     var author: String
