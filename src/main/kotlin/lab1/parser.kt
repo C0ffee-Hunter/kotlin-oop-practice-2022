@@ -1,37 +1,37 @@
-package lab1
+package main.kotlin.lab1
 
-class Book(val BookName: String, val Author: String, val YearOfIssue: String)
+class Book(val bookName: String, val author: String, val yearOfIssue: String)
 
-fun parsebook(Books: String): ArrayList<Book> {
-    val bookslist: ArrayList<Book> = arrayListOf()
+fun parsebook(books: String): List<Book> {
+    val booksList: ArrayList<Book> = arrayListOf()
     var bookName: String
     var author: String
     var yearOfIssue: String
     var isPoint = true
     var i = 0
-    while (i != Books.length) {
-        if (isPoint && Books[i] == '.') {
+    while (i != books.length) {
+        if (isPoint && books[i] == '.') {
             isPoint = false
             i++
             continue
-        } else if (!isPoint && Books[i] == '\n') {
+        } else if (!isPoint && books[i] == '\n') {
             isPoint = true
             i++
             continue
         } else if (isPoint) {
             i++; continue
         }
-        bookName = Books.substring(i, Books.indexOf('/', i))
+        bookName = books.substring(i, books.indexOf('/', i))
         i += bookName.length + 1
         i++
-        author = Books.substring(i, Books.indexOf('/', i))
+        author = books.substring(i, books.indexOf('/', i))
         i += author.length + 1
         i++
-        yearOfIssue = if (Books.indexOf('\n', i) != -1) Books.substring(i, Books.indexOf('\n', i))
-        else Books.substring(i)
+        yearOfIssue = if (books.indexOf('\n', i) != -1) books.substring(i, books.indexOf('\n', i))
+        else books.substring(i)
         i += yearOfIssue.length
         yearOfIssue = yearOfIssue.substring(yearOfIssue.indexOf('/') + 1)
-        bookslist.add(Book(bookName, author, yearOfIssue))
+        booksList.add(Book(bookName, author, yearOfIssue))
     }
-    return bookslist
+    return booksList
 }
