@@ -12,7 +12,7 @@ fun main()
 
     service.addToList(url)
     service.addToList(textNote)
-    service.addToList(textNote)
+    service.addToList(task)
 
     println(service.getAllNotes())
     println(service.findToTitle("github link"))
