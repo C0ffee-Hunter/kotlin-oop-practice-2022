@@ -2,13 +2,16 @@ package main.kotlin.lab3
 
 import java.time.LocalDateTime
 
-fun main()
-{
+fun main() {
     val service = Note()
 
     val textNote = service.createTextNote("Sudden Ideas", "Sell disposable underpants")
     val task = service.createTask("Today task", "go to class", "19.02.2018")
-    val url = service.createUrl("github link", "Our link", "https://github.com/C0ffee-Hunter/kotlin-oop-practice-2022/tree/master/src/main/kotlin")
+    val url = service.createUrl(
+        "github link",
+        "Our link",
+        "https://github.com/C0ffee-Hunter/kotlin-oop-practice-2022/tree/master/src/main/kotlin"
+    )
 
     service.addToList(url)
     service.addToList(textNote)
@@ -40,11 +43,9 @@ interface NoteService {
     fun getSortedByDate(): List<Notes>
 }
 
-class Note : NoteService
-{
+class Note : NoteService {
     private var noteList: MutableList<Notes> = mutableListOf()
-    fun addToList(note: Notes)
-    {
+    fun addToList(note: Notes) {
         noteList.add(note)
     }
 
@@ -64,34 +65,28 @@ class Note : NoteService
         return noteList.filterIsInstance<Notes.Url>()
     }
 
-    override fun createTextNote (title: String, content: String): Notes.TextNote
-    {
+    override fun createTextNote(title: String, content: String): Notes.TextNote {
         return Notes.TextNote(title, content, LocalDateTime.now())
     }
 
-    override fun createTask (title: String, content: String, deadline: String): Notes.Task
-    {
+    override fun createTask(title: String, content: String, deadline: String): Notes.Task {
         return Notes.Task(title, content, LocalDateTime.now(), deadline)
     }
 
-    override fun createUrl (title: String, content: String, url: String): Notes.Url
-    {
+    override fun createUrl(title: String, content: String, url: String): Notes.Url {
         return Notes.Url(title, content, LocalDateTime.now(), url)
     }
 
-    override fun removeNote(note: Notes)
-    {
+    override fun removeNote(note: Notes) {
         noteList.remove(note)
     }
 
-    override fun findToTitle(title: String): List<Notes>
-    {
-        return noteList.filter{it.title == title}
+    override fun findToTitle(title: String): List<Notes> {
+        return noteList.filter { it.title == title }
     }
 
-    override fun findToType(type: Class<Any>): List<Notes>
-    {
-        return noteList.filter{it.javaClass == type}
+    override fun findToType(type: Class<Any>): List<Notes> {
+        return noteList.filter { it.javaClass == type }
     }
 
     override fun getSortedByTitle(): List<Notes> {
@@ -103,22 +98,22 @@ class Note : NoteService
     }
 }
 
-sealed class Notes(var title: String, var content: String, val date: LocalDateTime)
-{
-    class TextNote(title_1: String, content_1: String, date_1: LocalDateTime): Notes(title_1, content_1, date_1)
-    {
+sealed class Notes(var title: String, var content: String, val date: LocalDateTime) {
+    class TextNote(title_1: String, content_1: String, date_1: LocalDateTime) : Notes(title_1, content_1, date_1) {
         override fun toString(): String {
             return "title: '$title'\ncontent: '$content'\n date: $date)"
         }
     }
-    class Task(title_2: String, content_2: String, date_2: LocalDateTime, private var deadline: String): Notes(title_2, content_2, date_2)
-    {
+
+    class Task(title_2: String, content_2: String, date_2: LocalDateTime, private var deadline: String) :
+        Notes(title_2, content_2, date_2) {
         override fun toString(): String {
             return "title: '$title'\n content: '$content'\n date: '$date'\n deadline: '$deadline'"
         }
     }
-    class Url(title_3: String, content_3: String, date_3: LocalDateTime, private var url: String): Notes(title_3, content_3, date_3)
-    {
+
+    class Url(title_3: String, content_3: String, date_3: LocalDateTime, private var url: String) :
+        Notes(title_3, content_3, date_3) {
         override fun toString(): String {
             return "title: '$title'\n content: '$content'\n date: '$date'\n url: '$url'"
         }
