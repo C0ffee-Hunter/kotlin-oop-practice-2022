@@ -12,9 +12,19 @@ enum class Cells(private val textValue: String)
     override fun toString(): String = textValue;
 }
 
-enum class State(val textValue: String) {
+enum class State(private val textValue: String) {
     WAIT_MOVE("Waiting for move..."),
     FINISH_GAME("Congratulations. Game finish");
+
+    override fun toString(): String = textValue;
+}
+
+enum class Move(private val textValue: String)
+{
+    Up("up"),
+    Down("down"),
+    Left("left"),
+    Right("right");
 
     override fun toString(): String = textValue;
 }
@@ -35,5 +45,10 @@ fun readMaze(): Map<Pair<Int, Int>, Char>
 class model
 {
     val field = readMaze().toMutableMap()
+    var state: State = State.WAIT_MOVE
 
+    fun doMove(move: Move)
+    {
+
+    }
 }
