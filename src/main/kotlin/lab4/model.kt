@@ -1,12 +1,13 @@
 package main.kotlin.lab4
 
+import main.kotlin.lab4.Move.*
 import java.io.File
 
 enum class State(private val textValue: String) {
     WAIT_MOVE("Waiting for move..."),
     FINISH_GAME("Congratulations. Game finish");
 
-    override fun toString(): String = textValue;
+    override fun toString(): String = textValue
 }
 
 enum class Move(private val textValue: String) {
@@ -16,7 +17,7 @@ enum class Move(private val textValue: String) {
     Left("left"),
     Right("right");
 
-    override fun toString(): String = textValue;
+    override fun toString(): String = textValue
 }
 
 interface ModelChangeListener {
@@ -26,7 +27,7 @@ interface ModelChangeListener {
 class Coordinates(var x: Int, var y: Int)
 
 fun readMaze(): Map<Pair<Int, Int>, Char> {
-    val level = File("C:\\Users\\rogin\\Рабочий стол\\kotlin\\src\\main\\kotlin\\lab4").readLines().withIndex()
+    val level = File("C:\\Users\\rogin\\Рабочий стол\\kotlin\\src\\main\\kotlin\\lab4\\maze.txt").readLines().withIndex()
         .flatMap { indexedValue ->
             val xCord = indexedValue.index
             indexedValue.value.toCharArray().withIndex().map { indexedChar ->
@@ -39,24 +40,23 @@ fun readMaze(): Map<Pair<Int, Int>, Char> {
 }
 
 class Model {
-    val field = readMaze().toMutableMap()
-    var move: Move = Move.Wait
-    var state: State = State.FINISH_GAME
+    private val field = readMaze().toMutableMap()
+    var state: State = State.WAIT_MOVE
 
     private val listeners: MutableSet<ModelChangeListener> = mutableSetOf()
 
     fun addModelChangeListener(listener: ModelChangeListener) = listeners.add(listener)
     fun removeModelChangeListener(listener: ModelChangeListener) = listeners.remove(listener)
 
-    var position = Coordinates(field.filter { it.value == 'E' }.keys.first().second,field.filter { it.value == 'E' }.keys.first().first)
+    private var position = Coordinates(field.filter { it.value == 'E' }.keys.first().second,field.filter { it.value == 'E' }.keys.first().first)
 
     fun doMove(move: Move)
     {
         when (move) {
-            Move.Right -> position.x++
-            Move.Left -> position.x--
-            Move.Up -> position.y--
-            Move.Down -> position.y++
+            Right -> position.x++
+            Left -> position.x--
+            Up -> position.y--
+            Down -> position.y++
         }
         if (position == Coordinates(field.filter { it.value == 'S' }.keys.first().second, field.filter { it.value == 'S' }.keys.first().first))
         {
