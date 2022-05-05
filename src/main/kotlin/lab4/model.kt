@@ -30,7 +30,7 @@ enum class Move(private val textValue: String)
     override fun toString(): String = textValue;
 }
 
-val GAME_NOT_FINISHED = setOf(Move.Up, Move.Down, Move.Left, Move.Right, State.WAIT_MOVE)
+//val GAME_NOT_FINISHED = setOf(Move.Up, Move.Down, Move.Left, Move.Right, State.WAIT_MOVE)
 
 fun readMaze(): Map<Pair<Int, Int>, Char>
 {
@@ -46,22 +46,16 @@ fun readMaze(): Map<Pair<Int, Int>, Char>
         return level
 }
 
-/*val level = File("C:\\Users\\Даниил\\Desktop\\kotlin-oop-practice-2022-master (1)\\kotlin-oop-practice-2022-master\\" +
-        "src\\main\\kotlin\\lab4\\maze.txt").readLines()
-val LEVEL_COL = level[0].length
-val LEVEL_ROW = level.size*/
-
 class Model
 {
-    //private val _board: MutableList<MutableList<Cells>> = mutableListOf()//initEmptyBoard()
     private var row = 0
     private var col = 0
-    //private val board: List<List<Cells>>
-        //get() = _board
     val field = readMaze().toMutableMap()
     var move: Move = Move.Wait
+    var state: State = State.FINISH_GAME
 
-    fun doMove(move: Move) {
+    fun doMove(move: Move)
+    {
         var playerRow = row
         var playerCol = col
 
@@ -70,24 +64,12 @@ class Model
             Move.Left -> playerCol--
             Move.Up -> playerRow--
             Move.Down -> playerRow++
-            //else -> require(move != State.EXIT) { "Game finished" }
         }
-
-        require(_board[playerRow][playerCol] != Cells.WALL) { "Wrong move" }
 
         val player = _board[playerRow][playerCol]
 
         _board[row][col] = Cells.EMPTY
         _board[playerRow][playerCol] = Cells.PLAYER
 
-        require(Cells.PLAYER != Cells.FINISH) { "Congratulations. Game finish" }
-
     }
-
-    fun saveGame(move: Move)
-    {
-
-    }
-
-
 }
