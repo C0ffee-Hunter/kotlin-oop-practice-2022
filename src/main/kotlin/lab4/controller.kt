@@ -6,7 +6,7 @@ import main.kotlin.lab4.Model
 
 class Controller(private val model: Model) {
     init {
-        //startGame()
+        startGame()
     }
     private fun startGame() {
         while (model.state != State.FINISH_GAME) {
@@ -25,8 +25,7 @@ class Controller(private val model: Model) {
                     println(e.message)
                 }
             }
-            if(model.state == State.FINISH_GAME)
-                break ///Грубый метод
+            if(model.state == State.FINISH_GAME) break
         }
     }
 }

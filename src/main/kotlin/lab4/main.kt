@@ -1,5 +1,9 @@
 package main.kotlin.lab4
 
+import lab4.controller.Controller
+
 fun main() {
-    println("Hello world!")
+    val maze = Model()
+    ConsoleUi(maze)
+    Controller(maze)
 }

@@ -2,16 +2,6 @@ package main.kotlin.lab4
 
 import java.io.File
 
-enum class Cells(private val textValue: String)
-{
-    WALL("#"),
-    EMPTY("-"),
-    PLAYER("P"),
-    FINISH("E");
-
-    override fun toString(): String = textValue
-}
-
 enum class State(private val textValue: String) {
     WAIT_MOVE("Waiting for move..."),
     FINISH_GAME("Congratulations. Game finish");
@@ -19,8 +9,7 @@ enum class State(private val textValue: String) {
     override fun toString(): String = textValue;
 }
 
-enum class Move(private val textValue: String)
-{
+enum class Move(private val textValue: String) {
     Wait("wait"),
     Up("up"),
     Down("down"),
@@ -30,46 +19,64 @@ enum class Move(private val textValue: String)
     override fun toString(): String = textValue;
 }
 
-//val GAME_NOT_FINISHED = setOf(Move.Up, Move.Down, Move.Left, Move.Right, State.WAIT_MOVE)
-
-fun readMaze(): Map<Pair<Int, Int>, Char>
-{
-    val level = File("C:\\Users\\Даниил\\Desktop\\kotlin-oop-practice-2022-master (1)\\kotlin-oop-practice-2022-master\\" +
-            "src\\main\\kotlin\\lab4\\maze.txt").readLines().withIndex().flatMap { indexedValue ->
-                val xCord = indexedValue.index
-                indexedValue.value.toCharArray().withIndex().map { indexedChar ->
-                    val yCord = indexedChar.index
-                    (xCord to yCord) to indexedChar.value
-                }
-            }
-            .toMap()
-        return level
+interface ModelChangeListener {
+    fun onModelChanged()
 }
 
-class Model
-{
-    private var row = 0
-    private var col = 0
+class Coordinates(var x: Int, var y: Int)
+
+fun readMaze(): Map<Pair<Int, Int>, Char> {
+    val level = File("C:\\Users\\rogin\\Рабочий стол\\kotlin\\src\\main\\kotlin\\lab4").readLines().withIndex()
+        .flatMap { indexedValue ->
+            val xCord = indexedValue.index
+            indexedValue.value.toCharArray().withIndex().map { indexedChar ->
+                val yCord = indexedChar.index
+                (xCord to yCord) to indexedChar.value
+            }
+        }
+        .toMap()
+    return level
+}
+
+class Model {
     val field = readMaze().toMutableMap()
     var move: Move = Move.Wait
     var state: State = State.FINISH_GAME
 
+    private val listeners: MutableSet<ModelChangeListener> = mutableSetOf()
+
+    fun addModelChangeListener(listener: ModelChangeListener) = listeners.add(listener)
+    fun removeModelChangeListener(listener: ModelChangeListener) = listeners.remove(listener)
+
+    var position = Coordinates(field.filter { it.value == 'E' }.keys.first().second,field.filter { it.value == 'E' }.keys.first().first)
+
     fun doMove(move: Move)
     {
-        var playerRow = row
-        var playerCol = col
-
         when (move) {
-            Move.Right -> playerCol++
-            Move.Left -> playerCol--
-            Move.Up -> playerRow--
-            Move.Down -> playerRow++
+            Move.Right -> position.x++
+            Move.Left -> position.x--
+            Move.Up -> position.y--
+            Move.Down -> position.y++
         }
+        if (position == Coordinates(field.filter { it.value == 'S' }.keys.first().second, field.filter { it.value == 'S' }.keys.first().first))
+        {
+            state = State.FINISH_GAME
+        } else state = State.WAIT_MOVE
+        notifyListeners()
+    }
 
-        val player = _board[playerRow][playerCol]
+    private fun notifyListeners() = listeners.forEach { it.onModelChanged() }
 
-        _board[row][col] = Cells.EMPTY
-        _board[playerRow][playerCol] = Cells.PLAYER
-
+    override fun toString(): String {
+        return buildString {
+            append(state).appendLine()
+            for (i in 0..5) {
+                for (j in 0..8) {
+                    if (i == position.y && j == position.x) append('S')
+                    else append(field[Pair(i, j)])
+                }
+                appendLine()
+            }
+        }
     }
 }
