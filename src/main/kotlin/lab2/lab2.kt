@@ -3,20 +3,20 @@ package main.kotlin.lab2
 import kotlin.math.sqrt
 
 fun main() {
-    val color1 = ColorOfRGBA(2, 123, 56, 0.31)
-    val color2 = ColorOfRGBA(3, 4, 56, 0.23)
-    val color3 = ColorOfRGBA(45, 234, 12, 1.0)
-    val color4 = ColorOfRGBA(5, 103, 78, 0.78)
-    val circle1 = Circle(2, color1, color2)
-    val square1 = Square(12.0, 15.0, color3, color1)
-    val square2 = Square(6.0, 13.0, color4, color2)
-    val triangle1 = Triangle(6.0, 13.0, 23.0, color4, color2)
+    val firstColor = Colors(2, 123, 56, 0.31)
+    val secondColor = Colors(3, 4, 56, 0.23)
+    val thirdColor = Colors(45, 234, 12, 1.0)
+    val fourthColor = Colors(5, 103, 78, 0.78)
+    val circle = Circle(2, firstColor, secondColor)
+    val firstSquare = Square(12.0, 15.0, thirdColor, firstColor)
+    val secondSquare = Square(6.0, 13.0, fourthColor, secondColor)
+    val triangle = Triangle(6.0, 13.0, 23.0, color4, color2)
     val figurelist = ShapeCollector()
 
-    figurelist.addFigures(circle1)
-    figurelist.addFigures(square1)
-    figurelist.addFigures(square2)
-    figurelist.addFigures(triangle1)
+    figureList.addFigures(circle)
+    figureList.addFigures(firstSquare)
+    figureList.addFigures(secondSquare)
+    figureList.addFigures(triangle)
 
     //sum of all figure
     figurelist.sumSquareFigures()
@@ -41,7 +41,7 @@ fun main() {
 
 }
 
-data class ColorOfRGBA(val red: Int, val green: Int, val blue: Int, val alpha: Double) {
+data class Colors(val red: Int, val green: Int, val blue: Int, val alpha: Double) {
     override fun toString(): String {
         return "Color figure of RGBA: $red, $green, $blue, $alpha"
     }
@@ -52,44 +52,44 @@ interface Shape2d {
 }
 
 interface ColoredShape2d : Shape2d {
-    val borderColor: ColorOfRGBA
-    val fillColor: ColorOfRGBA
+    val borderColor: Colors
+    val fillColor: Colors
 }
 
-class Circle(radius_1: Int, borderColor_1: ColorOfRGBA, fillColor_1: ColorOfRGBA) : ColoredShape2d {
-    val radius: Int = radius_1
+class Circle(radius: Int, borderColor_1: Colors, fillColor_1: Colors) : ColoredShape2d {
+    val classRadius: Int = radius
     var pi = 3.14
-    override val borderColor: ColorOfRGBA = borderColor_1
-    override val fillColor: ColorOfRGBA = fillColor_1
+    override val borderColor: Colors = borderColor_1
+    override val fillColor: Colors = fillColor_1
     override fun calcArea(): Double {
-        return pi * radius * radius
+        return pi * classRadius * classRadius
     }
 }
 
-class Square(firstSide_1: Double, secondSide_1: Double, borderColor_1: ColorOfRGBA, fillColor_1: ColorOfRGBA) :
+class Square(firstSide: Double, secondSide: Double, borderColor_1: Colors, fillColor_1: Colors) :
     ColoredShape2d {
-    val firstSide = firstSide_1
-    val secondSide = secondSide_1
-    override val borderColor: ColorOfRGBA = borderColor_1
-    override val fillColor: ColorOfRGBA = fillColor_1
+    val classFirstSide = firstSide
+    val classSecondSide = secondSide
+    override val borderColor: Colors = borderColor_1
+    override val fillColor: Colors = fillColor_1
     override fun calcArea(): Double {
-        return firstSide * secondSide
+        return classFirstSide * classSecondSide
     }
 }
 
 class Triangle(
-    triangleFirstSide_1: Double,
-    triangleSecondSide_1: Double,
-    triangleThirdSide_1: Double,
-    borderColorTriangle: ColorOfRGBA,
-    fillColorTriangle: ColorOfRGBA
+    triangleFirstSide: Double,
+    triangleSecondSide: Double,
+    triangleThirdSide: Double,
+    borderColorTriangle: Colors,
+    fillColorTriangle: Colors
 ) :
     ColoredShape2d {
-    val triangleFirstSide = triangleFirstSide_1
-    val triangleSecondSide = triangleSecondSide_1
-    val triangleThirdSide = triangleThirdSide_1
-    override val borderColor: ColorOfRGBA = borderColorTriangle
-    override val fillColor: ColorOfRGBA = fillColorTriangle
+    val triangleFirstSide = triangleFirstSide
+    val triangleSecondSide = triangleSecondSide
+    val triangleThirdSide = triangleThirdSide
+    override val borderColor: Colors = borderColorTriangle
+    override val fillColor: Colors = fillColorTriangle
     override fun calcArea(): Double {
         val square: Double
         // check triangle sides
@@ -160,7 +160,7 @@ class ShapeCollector {
         return maxFigure
     }
 
-    fun searchBorderColor(key: ColorOfRGBA): ArrayList<ColoredShape2d> {
+    fun searchBorderColor(key: Colors): ArrayList<ColoredShape2d> {
         val listKeepFiguries: ArrayList<ColoredShape2d> = arrayListOf()
         val size = figureList.size - 1
         for (i in 0..size) {
@@ -171,15 +171,15 @@ class ShapeCollector {
         return listKeepFiguries
     }
 
-    fun mapFillColor(): Map<ColorOfRGBA, List<ColoredShape2d>> {
+    fun mapFillColor(): Map<Colors, List<ColoredShape2d>> {
         return figureList.groupBy { it.fillColor }
     }
 
-    fun mapBorderColor(): Map<ColorOfRGBA, List<ColoredShape2d>> {
+    fun mapBorderColor(): Map<Colors, List<ColoredShape2d>> {
         return figureList.groupBy { it.borderColor }
     }
 
-    fun searchFillColor(key: ColorOfRGBA): ArrayList<ColoredShape2d> {
+    fun searchFillColor(key: Colors): ArrayList<ColoredShape2d> {
         val listKeepFiguries: ArrayList<ColoredShape2d> = arrayListOf()
         val size = figureList.size - 1
         for (i in 0..size) {
