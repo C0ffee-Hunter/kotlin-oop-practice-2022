@@ -10,8 +10,8 @@ fun main() {
     val circle = Circle(2, firstColor, secondColor)
     val firstSquare = Square(12.0, 15.0, thirdColor, firstColor)
     val secondSquare = Square(6.0, 13.0, fourthColor, secondColor)
-    val triangle = Triangle(6.0, 13.0, 23.0, color4, color2)
-    val figurelist = ShapeCollector()
+    val triangle = Triangle(6.0, 13.0, 23.0, fourthColor, secondColor)
+    val figureList = ShapeCollector()
 
     figureList.addFigures(circle)
     figureList.addFigures(firstSquare)
@@ -19,25 +19,25 @@ fun main() {
     figureList.addFigures(triangle)
 
     //sum of all figure
-    figurelist.sumSquareFigures()
+    figureList.sumSquareFigures()
     //list of all stored figure
-    figurelist.listAllFigures()
+    figureList.listAllFigures()
     //ашпгку list size
-    figurelist.sizeFigureList()
+    figureList.sizeFigureList()
     //Returning a figure with a min area
-    figurelist.minSquare()
+    figureList.minSquare()
     //Returning a figure with a max area
-    figurelist.maxSquare()
+    figureList.maxSquare()
     //return shapes grouped by fill color
-    figurelist.mapFillColor()
+    figureList.mapFillColor()
     //return shapes grouped by border color
-    figurelist.mapBorderColor()
+    figureList.mapBorderColor()
     //find all shapes by border color
-    figurelist.searchBorderColor(color3)
+    figureList.searchBorderColor(thirdColor)
     //find all shapes by fill color
-    figurelist.searchFillColor(color2)
+    figureList.searchFillColor(secondColor)
     //finding shapes by a specific type
-    figurelist.searchType("Triangle")
+    figureList.searchType()
 
 }
 
@@ -190,14 +190,5 @@ class ShapeCollector {
         return listKeepFiguries
     }
 
-    fun searchType(key: String): ArrayList<ColoredShape2d> {
-        val typeList: ArrayList<ColoredShape2d> = arrayListOf()
-        val size = figureList.size - 1
-        for (i in 0..size) {
-            if (figureList[i].javaClass.simpleName == key) {
-                typeList.add(figureList[i])
-            }
-        }
-        return typeList
-    }
+    fun searchType(): Map<Class<Any>, List<ColoredShape2d>> = figureList.groupBy { it.javaClass }
 }
