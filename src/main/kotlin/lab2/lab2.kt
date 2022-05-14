@@ -56,22 +56,22 @@ interface ColoredShape2d : Shape2d {
     val fillColor: Colors
 }
 
-class Circle(radius: Int, borderColor_1: Colors, fillColor_1: Colors) : ColoredShape2d {
+class Circle(radius: Int, borderColorCircle: Colors, fillColorCircle: Colors) : ColoredShape2d {
     val classRadius: Int = radius
     var pi = 3.14
-    override val borderColor: Colors = borderColor_1
-    override val fillColor: Colors = fillColor_1
+    override val borderColor: Colors = borderColorCircle
+    override val fillColor: Colors = fillColorCircle
     override fun calcArea(): Double {
         return pi * classRadius * classRadius
     }
 }
 
-class Square(firstSide: Double, secondSide: Double, borderColor_1: Colors, fillColor_1: Colors) :
+class Square(firstSide: Double, secondSide: Double, borderColorSquare: Colors, fillColorSquare: Colors) :
     ColoredShape2d {
     val classFirstSide = firstSide
     val classSecondSide = secondSide
-    override val borderColor: Colors = borderColor_1
-    override val fillColor: Colors = fillColor_1
+    override val borderColor: Colors = borderColorSquare
+    override val fillColor: Colors = fillColorSquare
     override fun calcArea(): Double {
         return classFirstSide * classSecondSide
     }
@@ -179,6 +179,10 @@ class ShapeCollector {
         return figureList.groupBy { it.borderColor }
     }
 
+    fun searchType(): Map<Class<Any>, List<ColoredShape2d>> {
+       return figureList.groupBy { it.javaClass }
+    }
+
     fun searchFillColor(key: Colors): ArrayList<ColoredShape2d> {
         val listKeepFiguries: ArrayList<ColoredShape2d> = arrayListOf()
         val size = figureList.size - 1
@@ -189,6 +193,4 @@ class ShapeCollector {
         }
         return listKeepFiguries
     }
-
-    fun searchType(): Map<Class<Any>, List<ColoredShape2d>> = figureList.groupBy { it.javaClass }
 }

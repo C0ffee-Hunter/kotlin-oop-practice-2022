@@ -18,4 +18,6 @@ fun main() {
     println(service.getAllNotes())
     println(service.findToTitle("github link"))
     println(service.getSortedByDate())
+    service.removeNote(url)
+    println(service.getAllNotes())
 }
