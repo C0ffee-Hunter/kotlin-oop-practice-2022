@@ -36,7 +36,7 @@ fun main() {
     figureList.searchBorderColor(thirdColor)
     //find all shapes by fill color
     figureList.searchFillColor(secondColor)
-    //finding shapes by a specific type
+    //finding shapes by type
     figureList.searchType()
 
 }
